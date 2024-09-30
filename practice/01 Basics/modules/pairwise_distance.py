@@ -53,7 +53,11 @@ class PairwiseDistance:
         # INSERT YOUR CODE
         
         if self.metric == 'euclidean':
-          dist_func = ED_distance
+            if self.is_normalize:
+                dist_func = norm_ED_distance
+            else:
+                dist_func = ED_distance
+                
         elif self.metric == 'dtw':
           dist_func = DTW_distance
 

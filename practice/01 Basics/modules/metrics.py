@@ -41,7 +41,9 @@ def norm_ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     norm_ed_dist = 0
 
     # INSERT YOUR CODE
-
+    n = len(ts1)
+    norm_ed_dist = np.sqrt(np.abs(2*n*(1 - ((np.dot(ts1, ts2) - 
+    n*np.mean(ts1)*np.mean(ts2))/ (n * np.std(ts1) * np.std(ts2))))))
     return norm_ed_dist
 
 
