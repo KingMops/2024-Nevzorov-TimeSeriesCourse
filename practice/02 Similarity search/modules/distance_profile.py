@@ -26,5 +26,15 @@ def brute_force(ts: np.ndarray, query: np.ndarray, is_normalize: bool = True) ->
     dist_profile = np.zeros(shape=(N,))
 
     # INSERT YOUR CODE
+    
+    if is_normalize:
+        query = z_normalize(query)
+    
+    for i in range(N):
+        if is_normalize:
+            T_sub = z_normalize(ts[i:i + m])
+        else:
+            T_sub = ts[i:i + m]
+        dist_profile[i] = ED_distance(query, T_sub)
 
     return dist_profile

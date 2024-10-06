@@ -166,7 +166,7 @@ def visualize_plot_times(times: np.ndarray, comparison_param: np.ndarray, exp_pa
     trace_titles = comparison_param
     x_axis_title = varying_param_name
     y_axis_title = 'Runtime, s'
-    
+
     mplot2d(np.array(varying_param_value), times, plot_title, x_axis_title, y_axis_title, trace_titles)
 
 
