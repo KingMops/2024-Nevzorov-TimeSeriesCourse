@@ -66,7 +66,7 @@ def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float = 1) -> float:
 
     # INSERT YOUR CODE
 
-    n = len(ts1)
+'''    n = len(ts1)
     d = np.zeros((n+1, n+1))
 
     for i in range(n+1):
@@ -84,4 +84,26 @@ def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float = 1) -> float:
     
     dtw_dist = d[n, n]
 
-    return dtw_dist
+    return dtw_dist'''
+
+    n, m = len(ts1), len(ts2)
+    r = max(int(r * max(n, m)), abs(n - m))
+    dtw_matrix = np.full((n + 1, m + 1), float('inf'))
+    dtw_matrix[0, 0] = 0
+
+    for i in range(1, n + 1):
+        dtw_matrix[i, 0] = float('inf')
+    for j in range(1, m + 1):
+        dtw_matrix[0, j] = float('inf')
+
+    for i in range(1, n + 1):
+        for j in range(max(1, i - r), min(m + 1, i + r + 1)):
+            cost = (ts1[i - 1] - ts2[j - 1]) ** 2
+            dtw_matrix[i, j] = cost + min(dtw_matrix[i - 1, j],
+                                          dtw_matrix[i, j - 1],
+                                          dtw_matrix[i - 1, j - 1])
+    return dtw_matrix[n, m]
+
+
+
+
