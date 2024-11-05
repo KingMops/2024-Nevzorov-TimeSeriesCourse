@@ -24,6 +24,9 @@ def compute_mp(ts1: np.ndarray, m: int, exclusion_zone: int = None, ts2: np.ndar
     """
     
     # INSERT YOUR CODE
+    scrump = stumpy.scrump(ts1.copy(), m, ts2, s=exclusion_zone,ignore_trivial=True)
+    scrump.update()
+    mp = np.array([(p, i) for p, i in zip(scrump.P_, scrump.I_)])
 
     return {'mp': mp[:, 0],
             'mpi': mp[:, 1],

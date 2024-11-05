@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def is_nan_inf(arr: np.ndarray) -> bool:
     """
     Check if the array contains np.nan, -np.nan, or np.inf values
@@ -13,8 +12,8 @@ def is_nan_inf(arr: np.ndarray) -> bool:
     -------
         flag of checking if the array contains np.nan, -np.nan, or np.inf values
     """
-
-    return np.isnan(arr) or np.isinf(abs(arr))
+    arr = np.asarray(arr)
+    return np.any(np.isnan(arr)) or np.any(np.isinf(np.abs(arr)))
 
 
 def apply_exclusion_zone(a: np.ndarray, idx: int, excl_zone: int, val: float) -> np.ndarray:
