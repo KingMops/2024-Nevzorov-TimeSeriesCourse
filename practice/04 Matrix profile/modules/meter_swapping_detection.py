@@ -52,13 +52,35 @@ def meter_swapping_detection(heads: dict, tails: dict, house_idx: dict, m: int) 
     min_score: time series pair with minimum swap-score
     """
 
-    eps = 0.001
+    min_score = float('inf')
+    best_pair = {'i': None, 'j': None, 'mp_j': None}
+    eps = 1e-8  # Маленькое значение для предотвращения деления на ноль
 
-    min_score = {}
+    for i in house_idx:
+        for j in house_idx:
+            if i != j:
+                # Преобразуем данные в одномерные массивы
+                head_i = heads[f'H_{i}'].values.flatten()
+                tail_j = tails[f'T_{j}'].values.flatten()
+                tail_i = tails[f'T_{i}'].values.flatten()
+                
+                # Матричный профиль между Head_i и Tail_j
+                mp_ij = compute_mp(ts1=head_i, m=m, ts2=tail_j)
 
-    # INSERT YOUR CODE
-    
-    return min_score
+                # Матричный профиль между Head_i и Tail_i (эталон)
+                mp_ii = compute_mp(ts1=head_i, m=m, ts2=tail_i)
+
+                # swap_score
+                score = np.min(mp_ij['mp']) / (np.min(mp_ii['mp']) + eps)
+
+                # Сравнение с текущим минимальным score
+                if score < min_score:
+                    min_score = score
+                    best_pair['i'] = i
+                    best_pair['j'] = j
+                    best_pair['mp_j'] = mp_ij
+
+    return best_pair
 
 
 def plot_consumptions_ts(consumptions: dict, cutoff, house_idx: list):
