@@ -10,6 +10,7 @@ def plot_snippets(ts, snippets):
             "font.size": 24,
         }
     ):
+
         fig, (ax_main, ax_labels) = plt.subplots(
             2, figsize=(16, 6), gridspec_kw={"height_ratios": [16, 2]}
         )
